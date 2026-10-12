@@ -96,7 +96,6 @@ export function getRestaurantsSnapshot(cb, filters = {}) {
     cb(results);
   });
 }
-
 export function getRestaurantSnapshotById(restaurantId, cb) {
   if (!restaurantId) {
     console.log("Error: Invalid ID received: ", restaurantId);
@@ -115,10 +114,6 @@ export function getRestaurantSnapshotById(restaurantId, cb) {
       timestamp: docSnap.data().timestamp.toDate(),
     });
   });
-}
-
-export function getRestaurantSnapshotById(restaurantId, cb) {
-  return;
 }
 
 export async function getReviewsByRestaurantId(db, restaurantId) {
