@@ -74,7 +74,6 @@ export async function getRestaurants(db = db, filters = {}) {
     };
   });
 }
-
 export function getRestaurantsSnapshot(cb, filters = {}) {
   if (typeof cb !== "function") {
     console.log("Error: The callback parameter is not a function");
