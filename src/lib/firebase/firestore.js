@@ -18,6 +18,7 @@ import {
 
 import { db } from "@/src/lib/firebase/clientApp";
 
+// Update the restaurant document with the public URL of its uploaded image.
 export async function updateRestaurantImageReference(
   restaurantId,
   publicImageUrl
@@ -60,6 +61,7 @@ function applyQueryFilters(q, { category, city, price, sort }) {
   return q;
 }
 
+// Fetch restaurants for the requested filters and convert timestamps to serializable dates.
 export async function getRestaurants(db = db, filters = {}) {
   let q = query(collection(db, "restaurants"));
 
@@ -74,6 +76,8 @@ export async function getRestaurants(db = db, filters = {}) {
     };
   });
 }
+
+// Subscribe to filtered restaurant changes and pass plain result objects to the callback.
 export function getRestaurantsSnapshot(cb, filters = {}) {
   if (typeof cb !== "function") {
     console.log("Error: The callback parameter is not a function");
@@ -97,7 +101,7 @@ export function getRestaurantsSnapshot(cb, filters = {}) {
   });
 }
 
-
+// Fetch one restaurant document for a server-rendered restaurant page.
 export async function getRestaurantById(db, restaurantId) {
   if (!restaurantId) {
     console.log("Error: Invalid ID received: ", restaurantId);
@@ -112,7 +116,7 @@ export async function getRestaurantById(db, restaurantId) {
 }
 
 
-
+// Subscribe to changes for a single restaurant document.
 export function getRestaurantSnapshotById(restaurantId, cb) {
   if (!restaurantId) {
     console.log("Error: Invalid ID received: ", restaurantId);
@@ -133,7 +137,7 @@ export function getRestaurantSnapshotById(restaurantId, cb) {
   });
 }
 
-
+// Fetch a restaurant's reviews in newest-first order.
 export async function getReviewsByRestaurantId(db, restaurantId) {
   if (!restaurantId) {
     console.log("Error: Invalid restaurantId received: ", restaurantId);
@@ -156,6 +160,7 @@ export async function getReviewsByRestaurantId(db, restaurantId) {
   });
 }
 
+// Subscribe to a restaurant's reviews and deliver them in newest-first order.
 export function getReviewsSnapshotByRestaurantId(restaurantId, cb) {
   if (!restaurantId) {
     console.log("Error: Invalid restaurantId received: ", restaurantId);
@@ -179,6 +184,7 @@ export function getReviewsSnapshotByRestaurantId(restaurantId, cb) {
   });
 }
 
+// Generate sample data, then save each restaurant and its reviews to Firestore.
 export async function addFakeRestaurantsAndReviews() {
   const data = await generateFakeRestaurantsAndReviews();
   for (const { restaurantData, ratingsData } of data) {

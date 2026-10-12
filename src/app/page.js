@@ -15,6 +15,7 @@ export const dynamic = "force-dynamic";
 // export const revalidate = 0;
 
 export default async function Home(props) {
+  // Resolve URL filters and use the authenticated Firebase app to fetch the listing.
   const searchParams = await props.searchParams;
   // Using seachParams which Next.js provides, allows the filtering to happen on the server-side, for example:
   // ?city=London&category=Indian&sort=Review

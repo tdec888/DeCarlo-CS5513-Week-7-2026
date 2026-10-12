@@ -12,12 +12,14 @@ import { setCookie, deleteCookie } from "cookies-next";
 function useUserSession(initialUser) {
   useEffect(() => {
     return onIdTokenChanged(async (user) => {
+      // Keep the server-readable session cookie aligned with the client auth token.
       if (user) {
         const idToken = await user.getIdToken();
         await setCookie("__session", idToken);
       } else {
         await deleteCookie("__session");
       }
+      // Reload only when the authenticated identity changes, so server-rendered data is refreshed.
       if (initialUser?.uid === user?.uid) {
         return;
       }
@@ -31,6 +33,7 @@ function useUserSession(initialUser) {
 export default function Header({ initialUser }) {
   const user = useUserSession(initialUser);
 
+  // Prevent the placeholder link navigation while starting the requested auth action.
   const handleSignOut = (event) => {
     event.preventDefault();
     signOut();
